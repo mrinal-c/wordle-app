@@ -1,0 +1,15 @@
+#board {
+    display: flex;
+    flex-direction: column;     /* stack flex items vertically */
+    justify-content: center;    /* center items vertically, in this case */
+    align-items: center;
+}
+
+#board > * {
+    padding: 60px;
+}
+
+#board > *:not(:last-child) {
+    padding: 0px;
+    margin: 0px;
+}

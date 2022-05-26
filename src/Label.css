@@ -1,0 +1,12 @@
+div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+  }
+
+.Label {
+    font-family: 'Luminari';
+    font-size: 30px;
+}
+

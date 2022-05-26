@@ -1,9 +1,11 @@
-.App {
-  text-align: center;
-}
-#mainDiv {
-  display: flex;
+#letterListDiv {
+    display: flex;
   flex-direction: column;     /* stack flex items vertically */
   justify-content: center;    /* center items vertically, in this case */
-  align-items: center;  
+  align-items: center;
 }
+
+#letterListDiv > * {
+    padding: 0px;
+    margin: 0px;
+} 
