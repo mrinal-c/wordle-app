@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import WordRow from "./WordRow";
 import './Board.css'
-import {getWordle, getLetterMap, wordList} from "./Data";
+import { getLetterMap, wordList} from "./Data";
 import LetterList from "./LetterList";
 
 let arr = [0, 1, 2, 3, 4, 5]
@@ -13,7 +13,7 @@ class Board extends Component {
             words: ['     ', '     ', '     ', '     ', '     ', '     '],
             rowIdx: 0,
             tileIdx: 0,
-            wordle: getWordle(),
+            wordle: props.wordle,
             solved: false,
             letterMap: getLetterMap()
         }
@@ -42,13 +42,19 @@ class Board extends Component {
     handleEnter() {
         if (this.state.tileIdx === 5 && wordList.includes(this.state.words[this.state.rowIdx])) {
             let solved = false;
-            if (this.state.words[this.state.rowIdx] === this.state.wordle) {
+            if (this.state.words[this.state.rowIdx] === this.props.wordle) {
                 solved = true;
             }
             this.setNewState(this.state.words, this.state.rowIdx + 1, 0, solved, this.state.letterMap);
             return true;
         }
         return false;
+    }
+
+    handlePopup() {
+        if (this.state.solved || this.state.rowIdx === 6) {
+            this.props.showPopup(this.state.solved);
+        }
     }
 
     updateLetterMap(map) {
@@ -60,26 +66,31 @@ class Board extends Component {
                 newLetterMap.set(letter, this.state.letterMap.get(letter));
             }
         }
-        this.setNewState(this.state.words, this.state.rowIdx, this.state.tileIdx, this.state.solved, newLetterMap);
+        this.setState(prevState => {
+            return {
+                words: prevState.words,
+                rowIdx: prevState.rowIdx,
+                tileIdx: prevState.tileIdx,
+                solved: prevState.solved,
+                letterMap: newLetterMap
+            }
+        }, this.handlePopup)
     }
 
     setNewState(words, row, tile, solved, letterMap) {
-        this.setState(prevState => {
-            return {
-                words: words,
-                rowIdx: row,
-                tileIdx: tile,
-                wordle: prevState.wordle,
-                solved: solved,
-                letterMap: letterMap
-            }
+        this.setState({
+            words: words,
+            rowIdx: row,
+            tileIdx: tile,
+            solved: solved,
+            letterMap: letterMap
         })
     }
 
     render() {
         return <div id="board">
             {arr.map(index => {
-                return <WordRow key={index} rowIdx={this.state.rowIdx} index={index} word={this.state.words[index]} wordle={this.state.wordle} handleEnter={this.handleEnter.bind(this)} handleKey={this.handleKey.bind(this)} updateLetterMap={this.updateLetterMap.bind(this)}/>
+                return <WordRow key={index} rowIdx={this.state.rowIdx} index={index} word={this.state.words[index]} wordle={this.props.wordle} handleEnter={this.handleEnter.bind(this)} handleKey={this.handleKey.bind(this)} updateLetterMap={this.updateLetterMap.bind(this)}/>
             })}
             <LetterList letterMap={this.state.letterMap}/>
         </div>

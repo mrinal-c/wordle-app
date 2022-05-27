@@ -1,19 +1,48 @@
 import React, {Component} from "react";
 import Label from "./Label";
 import Board from "./Board";
-import './App.css'
+import Modal from "react-modal";
+import './App.css';
+import './Modal.css'
+import {getWordle} from './Data';
 
 
 class App extends Component {
-  render() {
-    return (
-      <div id="mainDiv">
-        <Label className="mainElement"/>
-        <Board/>
-      </div>
+	constructor(props) {
+    	super(props);
+    	this.state = {
+      		showPopup: false,
+			  didSolve: false,
+              wordle: getWordle()
+    	}
+  	}
+
+      showPopup(didSolve) {
+		this.setState({
+            showPopup: true,
+            didSolve: didSolve
+        })
+      }
+
+	
+    render() {
+        return (
+      	<div id="mainDiv">
+        	<Label className="mainElement"/>
+        	<Board showPopup={this.showPopup.bind(this)} wordle={this.state.wordle}/>
+			<Modal isOpen={this.state.showPopup} id="modal">
+                <h1>
+                    {this.state.wordle}
+                </h1>
+                <br></br>
+				<h2>
+					{this.state.didSolve ? 'Congrats!' : 'Better luck next time!'}
+				</h2>
+			</Modal>
+      	</div>
        
-    );
-  }
+    	);
+  	}
 }
 
 export default App;
