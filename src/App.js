@@ -18,11 +18,23 @@ class App extends Component {
   	}
 
       showPopup(didSolve) {
-		this.setState({
-            showPopup: true,
-            didSolve: didSolve
-        })
+		this.setState(prevState => {
+			return {
+				showPopup: true,
+				didSolve: didSolve,
+				wordle: prevState.wordle
+			}
+			
+		})
       }
+
+	  playAgain() {
+		  this.setState({
+			  showPopup: false,
+			  didSolve: false,
+			  wordle: getWordle()
+		  })
+	  }
 
 	
     render() {
@@ -38,6 +50,8 @@ class App extends Component {
 				<h2>
 					{this.state.didSolve ? 'Congrats!' : 'Better luck next time!'}
 				</h2>
+				<br></br>
+				<button id="replayButton" onClick={this.playAgain.bind(this)}>Click to play again!</button>
 			</Modal>
       	</div>
        

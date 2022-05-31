@@ -11,14 +11,9 @@ class Tile extends Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        if (props.letter !== state.letter) {
+        if (props.letter !== state.letter || props.color !== state.color) {
             return {
                 letter: props.letter,
-                color: state.color
-            }
-        } else if (props.color !== state.color) {
-            return {
-                letter: state.letter,
                 color: props.color
             }
         }

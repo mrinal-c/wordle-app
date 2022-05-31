@@ -17,7 +17,13 @@ class WordRow extends Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        if (props.word !== state.word) {
+        if (props.wordle !== state.wordle) {
+            return {
+                word: props.word,
+                tileColors: ['black', 'black', 'black', 'black', 'black'],
+                wordle: props.wordle
+            }
+        } else if (props.word !== state.word) {
             return {
                 word: props.word,
                 tileColors: state.tileColors,

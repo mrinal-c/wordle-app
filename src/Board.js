@@ -19,6 +19,20 @@ class Board extends Component {
         }
     }
 
+    static getDerivedStateFromProps(props, state) {
+        if (props.wordle !== state.wordle) {
+            return {
+                words: ['     ', '     ', '     ', '     ', '     ', '     '],
+                rowIdx: 0,
+                tileIdx: 0,
+                wordle: props.wordle,
+                solved: false,
+                letterMap: getLetterMap()
+            }
+        }
+        return null;
+    }
+
     handleKey(e) {
         if (this.state.solved) {
             return;
