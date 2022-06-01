@@ -2,27 +2,16 @@ import React, {Component} from "react";
 import './Tile.css'
 
 class Tile extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            letter: props.letter,
-            color: props.color
+    handleKeyboardClick(e) {
+        e.preventDefault();
+        if (this.props.location === "letterList") {
+            this.props.handleKeyboardClick(e.target.innerText);
         }
-    }
-
-    static getDerivedStateFromProps(props, state) {
-        if (props.letter !== state.letter || props.color !== state.color) {
-            return {
-                letter: props.letter,
-                color: props.color
-            }
-        }
-        return null;
     }
 
     render() {
-        return <div id={this.state.color} className="tileDiv">
-            <label id="text">{this.state.letter}</label>
+        return <div id={this.props.color} className="tileDiv">
+            <label id="text" onClick={this.handleKeyboardClick.bind(this)}>{this.props.letter}</label>
         </div>
     }
 }

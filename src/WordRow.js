@@ -43,8 +43,10 @@ class WordRow extends Component {
             if (validEnter) {
                 this.checkWord();
             }
-        } else {
-            this.props.handleKey(e);
+        } else if (e.keyCode === 8 || (e.keyCode >= 65 && e.keyCode <= 90)){
+            let backspace = e.keyCode === 8;
+            let letter = e.key;
+            this.props.handleKey(letter, backspace);
         }
     }
 
@@ -103,7 +105,7 @@ class WordRow extends Component {
     render() {
         return <div id='row'>
         {arr.map(index => {
-            return <Tile key={index} letter={this.state.word[index]} color={this.state.tileColors[index]}/>
+            return <Tile key={index} letter={this.state.word[index]} color={this.state.tileColors[index]} location="wordRow"/>
         })}
     </div>
         

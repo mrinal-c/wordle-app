@@ -6,6 +6,11 @@
 
 #text {
     color: white;
+    padding: 16px;
+}
+
+#text:hover {
+    cursor: pointer;
 }
 
 #gray {

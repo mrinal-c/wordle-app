@@ -33,21 +33,21 @@ class Board extends Component {
         return null;
     }
 
-    handleKey(e) {
+    handleKey(letter, backspace) {
         if (this.state.solved) {
             return;
         }
         let words = this.state.words;
         let row = this.state.rowIdx;
         let tile = this.state.tileIdx;
-        if (e.keyCode === 8 && tile > 0) {
+        if (backspace && tile > 0) {
             let word = words[row];
             word = word.trim().slice(0, tile - 1).padEnd(5);
             words[row] = word;
             this.setNewState(words, row, tile - 1, false, this.state.letterMap);
-        } else if (e.keyCode >= 65 && e.keyCode <= 90 && tile <= 4) {
+        } else if (!backspace && tile <= 4) {
             let word = words[row];
-            word = word.trim().concat(e.key).padEnd(5);
+            word = word.trim().concat(letter).padEnd(5);
             words[row] = word;
             this.setNewState(words, row, tile + 1, false, this.state.letterMap);
         }
@@ -106,7 +106,7 @@ class Board extends Component {
             {arr.map(index => {
                 return <WordRow key={index} rowIdx={this.state.rowIdx} index={index} word={this.state.words[index]} wordle={this.props.wordle} handleEnter={this.handleEnter.bind(this)} handleKey={this.handleKey.bind(this)} updateLetterMap={this.updateLetterMap.bind(this)}/>
             })}
-            <LetterList letterMap={this.state.letterMap}/>
+            <LetterList letterMap={this.state.letterMap} handleKey={this.handleKey.bind(this)}/>
         </div>
     }
 }
